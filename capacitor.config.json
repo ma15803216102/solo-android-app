@@ -1,0 +1,9 @@
+{
+  "appId": "com.trae.solo",
+  "appName": "Solo App",
+  "webDir": "www",
+  "server": {
+    "url": "https://solo.trae.ai",
+    "cleartext": true
+  }
+}
