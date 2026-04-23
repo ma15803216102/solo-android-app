@@ -13,6 +13,13 @@ import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
     private Handler handler = new Handler(Looper.getMainLooper());
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        registerPlugin(TraeLoggerPlugin.class);
+    }
+
     private Runnable jsInjector = new Runnable() {
         @Override
         public void run() {
@@ -24,7 +31,9 @@ public class MainActivity extends BridgeActivity {
                             "if(window.Capacitor && window.Capacitor.Plugins.LocalNotifications){" +
                             "  window.Capacitor.Plugins.LocalNotifications.requestPermissions();" +
                             "}" +
+                            "const log=(m)=>{try{window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.TraeLogger&&window.Capacitor.Plugins.TraeLogger.log({message:m})}catch(e){}};" +
                             "let isGen=false;" +
+                            "let hadErr=false;" +
                             "let timer;" +
                             "new MutationObserver(()=>{ " +
                             "  clearTimeout(timer);" +
@@ -32,9 +41,11 @@ public class MainActivity extends BridgeActivity {
                             "    let t=document.body.textContent||'';" +
                             "    let gen=t.includes('停止生成')||t.includes('Stop generating');" +
                             "    let err=t.includes('发生错误')||t.includes('重新生成')||t.includes('生成失败');" +
-                            "    if(gen && !isGen) isGen=true;" +
+                            "    if(gen && !isGen){ isGen=true; hadErr=false; log('[SOLO] gen:start'); }" +
+                            "    if(err && !hadErr){ hadErr=true; log('[SOLO] gen:error_detected'); }" +
                             "    else if(!gen && isGen){ " +
                             "      isGen=false;" +
+                            "      log(hadErr||err?'[SOLO] gen:end error':'[SOLO] gen:end ok');" +
                             "      if(document.visibilityState==='hidden'){" +
                             "        let msg=err?'❌ 生成过程中发生错误，请返回查看':'✅ SOLO 已经回复完毕啦';" +
                             "        if(window.Capacitor && window.Capacitor.Plugins.LocalNotifications){" +
