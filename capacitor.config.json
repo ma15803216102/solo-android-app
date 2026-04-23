@@ -5,5 +5,14 @@
   "server": {
     "url": "https://solo.trae.ai",
     "cleartext": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    },
+    "StatusBar": {
+      "overlaysWebView": false,
+      "style": "DARK"
+    }
   }
 }
