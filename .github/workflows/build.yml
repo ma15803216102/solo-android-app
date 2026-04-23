@@ -47,15 +47,34 @@ jobs:
           sed -i "s/versionCode 1/versionCode $RUN_NUMBER/g" android/app/build.gradle
           sed -i "s/versionName \"1.0\"/versionName \"$VERSION_NAME\"/g" android/app/build.gradle
 
-      - name: Build APK
+      - name: Build Global APK
         working-directory: ./android
-        run: ./gradlew assembleDebug
+        run: |
+          ./gradlew assembleDebug
+          cp app/build/outputs/apk/debug/app-debug.apk ../app-global-v1.0.${{ github.run_number }}.apk
 
-      - name: Upload APK as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug-v1.0.${{ github.run_number }}.apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Prepare CN App (solo.trae.cn)
+        run: |
+          # Modify capacitor.config.json
+          sed -i 's/solo.trae.ai/solo.trae.cn/g' capacitor.config.json
+          sed -i 's/"appId": "com.trae.solo"/"appId": "cn.trae.solo"/g' capacitor.config.json
+          sed -i 's/"appName": "TRAE SOLO"/"appName": "TRAE SOLO CN"/g' capacitor.config.json
+          
+          # Modify strings.xml
+          sed -i 's/>TRAE SOLO</>TRAE SOLO CN</g' android/app/src/main/res/values/strings.xml
+          sed -i 's/>com.trae.solo</>cn.trae.solo</g' android/app/src/main/res/values/strings.xml
+          
+          # Modify build.gradle applicationId
+          sed -i 's/applicationId "com.trae.solo"/applicationId "cn.trae.solo"/g' android/app/build.gradle
+          
+          # Sync capacitor to apply changes
+          npx cap sync android
+
+      - name: Build CN APK
+        working-directory: ./android
+        run: |
+          ./gradlew clean assembleDebug
+          cp app/build/outputs/apk/debug/app-debug.apk ../app-cn-v1.0.${{ github.run_number }}.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -63,13 +82,17 @@ jobs:
           tag_name: v1.0.${{ github.run_number }}
           name: Release v1.0.${{ github.run_number }}
           body: |
-            ## TRAE SOLO Android App Update
+            ## TRAE SOLO Android Apps Update
             
             - **Version:** 1.0.${{ github.run_number }}
             - **Build:** ${{ github.run_number }}
             - **Commit:** ${{ github.sha }}
             
-            Automatically generated build by TRAE SOLO.
-          files: android/app/build/outputs/apk/debug/app-debug.apk
+            Automatically generated dual-builds by TRAE SOLO.
+            - `app-global-v1.0.x.apk`: Connects to `solo.trae.ai` (Global version)
+            - `app-cn-v1.0.x.apk`: Connects to `solo.trae.cn` (China version)
+          files: |
+            app-global-v1.0.${{ github.run_number }}.apk
+            app-cn-v1.0.${{ github.run_number }}.apk
           draft: false
           prerelease: false
