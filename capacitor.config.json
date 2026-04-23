@@ -25,10 +25,11 @@
       "layoutName": "launch_screen",
       "useDialog": false
     },
-    "StatusBar": {
-      "overlaysWebView": false,
-      "style": "LIGHT",
-      "backgroundColor": "#000000"
+    "SystemBars": {
+      "insetsHandling": "disable"
+    },
+    "EdgeToEdgeSupport": {
+      "backgroundColor": "#FFFFFF"
     }
   }
 }
