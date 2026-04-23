@@ -34,6 +34,7 @@ public class MainActivity extends BridgeActivity {
                             "let _tl=null;" +
                             "const getTL=()=>{try{if(!_tl && window.Capacitor && window.Capacitor.registerPlugin){_tl=window.Capacitor.registerPlugin('TraeLogger');}return _tl;}catch(e){return null}};" +
                             "const log=(m)=>{try{console.log('[TRAE_SOLO] '+m);}catch(e){} try{const p=getTL(); if(p&&p.log)p.log({message:m});}catch(e){}};" +
+                            "const notify=(t,m)=>{try{const p=getTL(); if(p&&p.notify)p.notify({title:t,message:m});}catch(e){}};" +
                             "try{const _ce=console.error; console.error=(...a)=>{try{if(a&&a[0]&&(''+a[0]).includes('ResizeObserver loop'))return;}catch(e){} _ce.apply(console,a);};}catch(e){}" +
                             "window.addEventListener('error', e=>{try{if(e&&e.message&&e.message.includes('ResizeObserver loop')){e.preventDefault();e.stopImmediatePropagation();}}catch(_){}}, true);" +
                             "log('injected and started polling');" +
@@ -50,11 +51,7 @@ public class MainActivity extends BridgeActivity {
                                 "      log(hadErr||err?'gen:end error':'gen:end ok');" +
                             "      if(document.visibilityState==='hidden'){" +
                             "        let msg=err?'❌ 生成过程中发生错误，请返回查看':'✅ SOLO 已经回复完毕啦';" +
-                            "        if(window.Capacitor && window.Capacitor.Plugins.LocalNotifications){" +
-                            "          window.Capacitor.Plugins.LocalNotifications.schedule({" +
-                            "            notifications:[{title:'TRAE SOLO',body:msg,id:Date.now(),schedule:{at:new Date(Date.now()+100)}}]" +
-                            "          });" +
-                            "        }" +
+                            "        notify('TRAE SOLO', msg);" +
                             "      }" +
                             "    }" +
                             "}, 500);" +
