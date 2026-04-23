@@ -107,6 +107,7 @@ public class MainActivity extends BridgeActivity {
                              "document.getElementById('t-ref').onclick=()=>{window.location.reload();c.classList.remove('exp');resT();};" +
                              "document.addEventListener('click',e=>{if(!c.contains(e.target)){c.classList.remove('exp');resT();}});" +
                               "window.addEventListener('resize',()=>{let t=parseFloat(c.style.top);if(isNaN(t))t=c.getBoundingClientRect().top;c.style.top=Math.max(0,Math.min(t,window.innerHeight-56))+'px';snap();});" +
+                              "c.style.right='auto';c.style.bottom='auto';" +
                               "const st=load();" +
                               "if(st&&typeof st.top==='number'){" +
                               "  c.style.top=Math.max(0,Math.min(st.top,window.innerHeight-56))+'px';" +
@@ -114,7 +115,13 @@ public class MainActivity extends BridgeActivity {
                               "  c.classList.remove('snap-left','snap-right');" +
                               "  c.classList.add((st.side==='L')?'snap-left':'snap-right');" +
                               "  resT();" +
-                              "}else{snap();}" +
+                              "}else{" +
+                              "  c.style.top=Math.max(0,Math.min(window.innerHeight-56-80,window.innerHeight-56))+'px';" +
+                              "  c.style.left=(window.innerWidth-56)+'px';" +
+                              "  c.classList.remove('snap-left','snap-right');" +
+                              "  c.classList.add('snap-right');" +
+                              "  resT();" +
+                              "}" +
                              "}";
                     webView.evaluateJavascript(js, null);
                 }
