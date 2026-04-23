@@ -16,5 +16,8 @@
     "@capacitor/core": "^8.3.0",
     "@capacitor/splash-screen": "^8.0.1",
     "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.8"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5"
   }
 }
