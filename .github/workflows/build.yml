@@ -50,18 +50,20 @@ jobs:
       - name: Build Global APK
         working-directory: ./android
         run: |
+          # Make sure app name explicitly says "Global" before build
+          sed -i 's/>TRAE SOLO</>TRAE SOLO 国际版</g' app/src/main/res/values/strings.xml
           ./gradlew assembleDebug
-          cp app/build/outputs/apk/debug/app-debug.apk ../app-global-v1.0.${{ github.run_number }}.apk
+          cp app/build/outputs/apk/debug/app-debug.apk ../TRAE-SOLO-Global-v1.0.${{ github.run_number }}.apk
 
       - name: Prepare CN App (solo.trae.cn)
         run: |
           # Modify capacitor.config.json
           sed -i 's/solo.trae.ai/solo.trae.cn/g' capacitor.config.json
           sed -i 's/"appId": "com.trae.solo"/"appId": "cn.trae.solo"/g' capacitor.config.json
-          sed -i 's/"appName": "TRAE SOLO"/"appName": "TRAE SOLO CN"/g' capacitor.config.json
+          sed -i 's/"appName": "TRAE SOLO"/"appName": "TRAE SOLO CN版"/g' capacitor.config.json
           
           # Modify strings.xml
-          sed -i 's/>TRAE SOLO</>TRAE SOLO CN</g' android/app/src/main/res/values/strings.xml
+          sed -i 's/>TRAE SOLO 国际版</>TRAE SOLO CN版</g' android/app/src/main/res/values/strings.xml
           sed -i 's/>com.trae.solo</>cn.trae.solo</g' android/app/src/main/res/values/strings.xml
           
           # Modify build.gradle applicationId
@@ -74,7 +76,7 @@ jobs:
         working-directory: ./android
         run: |
           ./gradlew clean assembleDebug
-          cp app/build/outputs/apk/debug/app-debug.apk ../app-cn-v1.0.${{ github.run_number }}.apk
+          cp app/build/outputs/apk/debug/app-debug.apk ../TRAE-SOLO-CN-v1.0.${{ github.run_number }}.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -89,10 +91,10 @@ jobs:
             - **Commit:** ${{ github.sha }}
             
             Automatically generated dual-builds by TRAE SOLO.
-            - `app-global-v1.0.x.apk`: Connects to `solo.trae.ai` (Global version)
-            - `app-cn-v1.0.x.apk`: Connects to `solo.trae.cn` (China version)
+            - `TRAE-SOLO-Global-v1.0.x.apk`: Connects to `solo.trae.ai` (国际版)
+            - `TRAE-SOLO-CN-v1.0.x.apk`: Connects to `solo.trae.cn` (CN版)
           files: |
-            app-global-v1.0.${{ github.run_number }}.apk
-            app-cn-v1.0.${{ github.run_number }}.apk
+            TRAE-SOLO-Global-v1.0.${{ github.run_number }}.apk
+            TRAE-SOLO-CN-v1.0.${{ github.run_number }}.apk
           draft: false
           prerelease: false
