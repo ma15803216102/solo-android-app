@@ -79,6 +79,17 @@ public class MainActivity extends BridgeActivity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        // Prevent WebView from suspending JS execution and network requests
+        // when the app goes to the background.
+        if (bridge != null && bridge.getWebView() != null) {
+            bridge.getWebView().resumeTimers();
+            bridge.getWebView().onResume();
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(jsInjector);
