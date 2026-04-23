@@ -6,13 +6,17 @@
     "url": "https://solo.trae.ai",
     "cleartext": true
   },
+  "android": {
+    "adjustMarginsForEdgeToEdge": "force"
+  },
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
     },
     "StatusBar": {
       "overlaysWebView": false,
-      "style": "DARK"
+      "style": "LIGHT",
+      "backgroundColor": "#000000"
     }
   }
 }
