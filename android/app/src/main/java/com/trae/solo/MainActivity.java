@@ -14,49 +14,13 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        registerPlugin(TraeLoggerPlugin.class);
-    }
-
     private Runnable jsInjector = new Runnable() {
         @Override
         public void run() {
             if (bridge != null) {
                 WebView webView = bridge.getWebView();
                 if (webView != null) {
-                    String js = "if(!window._traeNotifierInjected){" +
-                            "window._traeNotifierInjected=true;" +
-                            "if(window.Capacitor && window.Capacitor.Plugins.LocalNotifications){" +
-                            "  window.Capacitor.Plugins.LocalNotifications.requestPermissions();" +
-                            "}" +
-                            "let _tl=null;" +
-                            "const getTL=()=>{try{if(!_tl && window.Capacitor && window.Capacitor.registerPlugin){_tl=window.Capacitor.registerPlugin('TraeLogger');}return _tl;}catch(e){return null}};" +
-                            "const log=(m)=>{try{console.log('[TRAE_SOLO] '+m);}catch(e){} try{const p=getTL(); if(p&&p.log)p.log({message:m});}catch(e){}};" +
-                            "const notify=(t,m)=>{try{const p=getTL(); if(p&&p.notify)p.notify({title:t,message:m});}catch(e){}};" +
-                            "try{const _ce=console.error; console.error=(...a)=>{try{if(a&&a[0]&&(''+a[0]).includes('ResizeObserver loop'))return;}catch(e){} _ce.apply(console,a);};}catch(e){}" +
-                            "window.addEventListener('error', e=>{try{if(e&&e.message&&e.message.includes('ResizeObserver loop')){e.preventDefault();e.stopImmediatePropagation();}}catch(_){}}, true);" +
-                            "log('injected and started polling');" +
-                            "let isGen=false;" +
-                            "let hadErr=false;" +
-                            "setInterval(()=>{ " +
-                            "    let t=document.body.textContent||'';" +
-                            "    let gen=t.includes('停止生成')||t.includes('Stop generating');" +
-                            "    let err=t.includes('发生错误')||t.includes('重新生成')||t.includes('生成失败');" +
-                                "    if(gen && !isGen){ isGen=true; hadErr=false; log('gen:start'); }" +
-                                "    if(err && !hadErr){ hadErr=true; log('gen:error_detected'); }" +
-                            "    else if(!gen && isGen){ " +
-                            "      isGen=false;" +
-                                "      log(hadErr||err?'gen:end error':'gen:end ok');" +
-                            "      if(document.visibilityState==='hidden'){" +
-                            "        let msg=err?'❌ 生成过程中发生错误，请返回查看':'✅ SOLO 已经回复完毕啦';" +
-                            "        notify('TRAE SOLO', msg);" +
-                            "      }" +
-                            "    }" +
-                            "}, 500);" +
-                            "}" +
-                            "if(!window._traeFabInjected){" +
+                    String js = "if(!window._traeFabInjected){" +
                              "window._traeFabInjected=true;" +
                              "const c=document.createElement('div');" +
                              "c.id='t-fab';" +
