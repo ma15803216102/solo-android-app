@@ -32,12 +32,10 @@ public class MainActivity extends BridgeActivity {
                             "  window.Capacitor.Plugins.LocalNotifications.requestPermissions();" +
                             "}" +
                             "const log=(m)=>{try{window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.TraeLogger&&window.Capacitor.Plugins.TraeLogger.log({message:m})}catch(e){}};" +
+                            "log('[SOLO] TraeLogger injected and started polling!');" +
                             "let isGen=false;" +
                             "let hadErr=false;" +
-                            "let timer;" +
-                            "new MutationObserver(()=>{ " +
-                            "  clearTimeout(timer);" +
-                            "  timer = setTimeout(()=>{ " +
+                            "setInterval(()=>{ " +
                             "    let t=document.body.textContent||'';" +
                             "    let gen=t.includes('停止生成')||t.includes('Stop generating');" +
                             "    let err=t.includes('发生错误')||t.includes('重新生成')||t.includes('生成失败');" +
@@ -55,8 +53,7 @@ public class MainActivity extends BridgeActivity {
                             "        }" +
                             "      }" +
                             "    }" +
-                            "  }, 500);" +
-                            "}).observe(document.body,{childList:true,subtree:true,characterData:true});" +
+                            "}, 500);" +
                             "}" +
                             "if(!window._traeFabInjected){" +
                              "window._traeFabInjected=true;" +
