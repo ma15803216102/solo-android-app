@@ -32,6 +32,19 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync android
 
+      - name: Update Version
+        run: |
+          # Calculate version code based on GitHub Run Number
+          # We start from base version 1.0.0
+          RUN_NUMBER=${{ github.run_number }}
+          VERSION_NAME="1.0.${RUN_NUMBER}"
+          
+          echo "Updating to Version Code: $RUN_NUMBER, Version Name: $VERSION_NAME"
+          
+          # Replace version code and name in app/build.gradle
+          sed -i "s/versionCode 1/versionCode $RUN_NUMBER/g" android/app/build.gradle
+          sed -i "s/versionName \"1.0\"/versionName \"$VERSION_NAME\"/g" android/app/build.gradle
+
       - name: Build APK
         working-directory: ./android
         run: ./gradlew assembleDebug
@@ -39,5 +52,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug.apk
+          name: app-debug-v1.0.${{ github.run_number }}.apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
