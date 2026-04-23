@@ -10,6 +10,8 @@ jobs:
   build:
     name: Build APK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Repository
@@ -49,8 +51,25 @@ jobs:
         working-directory: ./android
         run: ./gradlew assembleDebug
 
-      - name: Upload APK
+      - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-v1.0.${{ github.run_number }}.apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Release v1.0.${{ github.run_number }}
+          body: |
+            ## TRAE SOLO Android App Update
+            
+            - **Version:** 1.0.${{ github.run_number }}
+            - **Build:** ${{ github.run_number }}
+            - **Commit:** ${{ github.sha }}
+            
+            Automatically generated build by TRAE SOLO.
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+          draft: false
+          prerelease: false
