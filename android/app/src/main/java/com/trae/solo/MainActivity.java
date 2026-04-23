@@ -31,7 +31,8 @@ public class MainActivity extends BridgeActivity {
                             "if(window.Capacitor && window.Capacitor.Plugins.LocalNotifications){" +
                             "  window.Capacitor.Plugins.LocalNotifications.requestPermissions();" +
                             "}" +
-                            "const log=(m)=>{try{window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.TraeLogger&&window.Capacitor.Plugins.TraeLogger.log({message:m})}catch(e){}};" +
+                            "const log=(m)=>{try{if(window.Capacitor){window.Capacitor.registerPlugin('TraeLogger').log({message:m});}}catch(e){}};" +
+                            "window.addEventListener('error', e => { if(e.message && e.message.includes('ResizeObserver')) e.stopImmediatePropagation(); });" +
                             "log('[SOLO] TraeLogger injected and started polling!');" +
                             "let isGen=false;" +
                             "let hadErr=false;" +
