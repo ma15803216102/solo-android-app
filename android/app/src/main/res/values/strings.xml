@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Solo App</string>
-    <string name="title_activity_main">Solo App</string>
+    <string name="app_name">TRAE SOLO</string>
+    <string name="title_activity_main">TRAE SOLO</string>
     <string name="package_name">com.trae.solo</string>
     <string name="custom_url_scheme">com.trae.solo</string>
 </resources>
