@@ -58,6 +58,9 @@ public class MainActivity extends BridgeActivity {
                              "document.body.appendChild(c);" +
                              "let m=document.getElementById('t-main');" +
                              "let sx,sy,ix,iy,moved=false,ht;" +
+                             "const K='traeFabPosV1';" +
+                             "const load=()=>{try{return JSON.parse(localStorage.getItem(K)||'null')}catch(e){return null}};" +
+                             "const save=()=>{try{localStorage.setItem(K,JSON.stringify({side:c.classList.contains('snap-left')?'L':'R',top:parseFloat(c.style.top)||0}))}catch(e){}};" +
                              "const resT=()=>{" +
                              "  clearTimeout(ht);" +
                              "  if(!c.classList.contains('exp')) ht=setTimeout(()=>c.classList.add('half'),2000);" +
@@ -69,6 +72,7 @@ public class MainActivity extends BridgeActivity {
                              "  c.classList.remove('snap-left','snap-right');" +
                              "  c.classList.add(isL?'snap-left':'snap-right');" +
                              "  resT();" +
+                             "  save();" +
                              "};" +
                              "m.addEventListener('touchstart',e=>{" +
                              "  c.classList.remove('half');" +
@@ -102,7 +106,15 @@ public class MainActivity extends BridgeActivity {
                              "document.getElementById('t-back').onclick=()=>{window.history.back();c.classList.remove('exp');resT();};" +
                              "document.getElementById('t-ref').onclick=()=>{window.location.reload();c.classList.remove('exp');resT();};" +
                              "document.addEventListener('click',e=>{if(!c.contains(e.target)){c.classList.remove('exp');resT();}});" +
-                             "snap();" +
+                              "window.addEventListener('resize',()=>{let t=parseFloat(c.style.top);if(isNaN(t))t=c.getBoundingClientRect().top;c.style.top=Math.max(0,Math.min(t,window.innerHeight-56))+'px';snap();});" +
+                              "const st=load();" +
+                              "if(st&&typeof st.top==='number'){" +
+                              "  c.style.top=Math.max(0,Math.min(st.top,window.innerHeight-56))+'px';" +
+                              "  c.style.left=(st.side==='L')?'0px':(window.innerWidth-56)+'px';" +
+                              "  c.classList.remove('snap-left','snap-right');" +
+                              "  c.classList.add((st.side==='L')?'snap-left':'snap-right');" +
+                              "  resT();" +
+                              "}else{snap();}" +
                              "}";
                     webView.evaluateJavascript(js, null);
                 }
