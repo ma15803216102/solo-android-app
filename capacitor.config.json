@@ -4,7 +4,8 @@
   "webDir": "www",
   "server": {
     "url": "https://solo.trae.ai",
-    "cleartext": true
+    "cleartext": true,
+    "errorPath": "error.html"
   },
   "android": {
     "adjustMarginsForEdgeToEdge": "force"
