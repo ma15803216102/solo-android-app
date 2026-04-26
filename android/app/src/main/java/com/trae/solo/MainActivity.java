@@ -142,6 +142,13 @@ public class MainActivity extends BridgeActivity {
                             "    }\n" +
                             "    if(!targetNode || targetNode.dataset.autoContinued==='true') return;\n" +
                             "    targetNode.dataset.autoContinued='true';" +
+                            "    window._traeLastAutoContinueTime = window._traeLastAutoContinueTime || 0;\n" +
+                            "    const now = Date.now();\n" +
+                            "    if(now - window._traeLastAutoContinueTime < 60000) {\n" +
+                            "      console.log('[SOLO监控] ⏳ 触发1分钟冷却锁，已忽略本次打断信号...');\n" +
+                            "      return;\n" +
+                            "    }\n" +
+                            "    window._traeLastAutoContinueTime = now;\n" +
                             "    console.log('[SOLO监控] ⚠️ 捕捉到最新节点模型异常打断信号！准备执行继续操作...');\n" +
                             "    setTimeout(()=>{\n" +
                             "      console.log('[SOLO监控] 🔍 正在寻找富文本输入框...');\n" +
