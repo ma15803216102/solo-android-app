@@ -89,6 +89,7 @@ public class MainActivity extends BridgeActivity {
                              "    document.getElementById('t-icon-stop').style.display='block';\n" +
                              "    document.getElementById('t-auto-toggle').style.background='#ffebee';\n" +
                              "    console.log('[SOLO监控] ▶️ 自动继续监控已开启');\n" +
+                             "    if(typeof window._traeCheckAndAutoContinue === 'function') window._traeCheckAndAutoContinue();\n" +
                              "  }else{\n" +
                              "    document.getElementById('t-icon-play').style.display='block';\n" +
                              "    document.getElementById('t-icon-stop').style.display='none';\n" +
@@ -116,46 +117,48 @@ public class MainActivity extends BridgeActivity {
                              "}" +
                              "}\n" +
                              "if(!window._traeAutoContinueInjected) {\n" +
-                             "  window._traeAutoContinueInjected=true;\n" +
-                             "  console.log('[SOLO监控] 🚀 监控脚本已成功注入，正在后台静默监听DOM变化...');\n" +
-                             "  const observer=new MutationObserver(()=>{\n" +
+                            "  window._traeAutoContinueInjected=true;\n" +
+                            "  console.log('[SOLO监控] 🚀 监控脚本已成功注入，正在后台静默监听DOM变化与定时巡检...');\n" +
+                            "  window._traeCheckAndAutoContinue=()=>{\n" +
                             "    if(!window._traeAutoContinueEnabled) return;\n" +
                             "    const agentMessages=document.querySelectorAll('.turn__agent-message, [class*=\"agent-message\"]');\n" +
-                             "    if(agentMessages.length===0) return;\n" +
-                             "    const lastMsg=agentMessages[agentMessages.length-1];\n" +
-                             "    if(lastMsg.dataset.autoContinued==='true') return;\n" +
-                             "    const text=lastMsg.textContent||'';\n" +
-                             "    if(text.includes('检测到模型循环，请求已被中断') || text.includes('abnormally stopped') || text.includes('进入循环') || text.includes('停止了当前对话')){\n" +
-                             "      lastMsg.dataset.autoContinued='true';" +
-                             "      console.log('[SOLO监控] ⚠️ 捕捉到模型循环中断信号！准备执行自动恢复...');\n" +
-                             "      setTimeout(()=>{\n" +
-                             "        console.log('[SOLO监控] 🔍 正在寻找富文本输入框...');\n" +
-                             "        const inputElement=document.querySelector('.chat-input-v2-input-box-editable[contenteditable=\"true\"]');\n" +
-                             "        if(inputElement){\n" +
-                             "          console.log('[SOLO监控] ✅ 找到输入框，正在模拟获取焦点和人类输入...');\n" +
-                             "          inputElement.focus();\n" +
-                             "          document.execCommand('insertText', false, '继续');\n" +
-                             "          console.log('[SOLO监控] ⌨️ 已成功通过底层指令输入“继续”');\n" +
-                             "          setTimeout(()=>{\n" +
-                             "            console.log('[SOLO监控] 🔍 正在寻找发送按钮...');\n" +
-                             "            const sendBtn=document.querySelector('.chat-input-v2-send-button');\n" +
-                             "            if(sendBtn){ \n" +
-                             "              console.log('[SOLO监控] ✅ 找到发送按钮，正在移除禁用状态并触发点击...');\n" +
-                             "              sendBtn.removeAttribute('disabled'); \n" +
-                             "              sendBtn.click(); \n" +
-                             "              console.log('[SOLO监控] 🎉 自动发送完毕，对话已成功恢复！');\n" +
-                             "            } else {\n" +
-                             "              console.error('[SOLO监控] ❌ 未找到发送按钮，流程异常终止！');\n" +
-                             "            }\n" +
-                             "          }, 300);\n" +
-                             "        } else {\n" +
-                             "          console.error('[SOLO监控] ❌ 未找到富文本输入框，流程异常终止！');\n" +
-                             "        }\n" +
-                             "      }, 1000);\n" +
-                             "    }\n" +
-                             "  });\n" +
-                             "  observer.observe(document.body,{childList:true,subtree:true,characterData:true});\n" +
-                             "}\n" +
+                            "    if(agentMessages.length===0) return;\n" +
+                            "    const lastMsg=agentMessages[agentMessages.length-1];\n" +
+                            "    if(lastMsg.dataset.autoContinued==='true') return;\n" +
+                            "    const text=lastMsg.textContent||'';\n" +
+                            "    if(text.includes('检测到模型循环，请求已被中断') || text.includes('abnormally stopped') || text.includes('进入循环') || text.includes('停止了当前对话')){\n" +
+                            "      lastMsg.dataset.autoContinued='true';" +
+                            "      console.log('[SOLO监控] ⚠️ 捕捉到模型循环中断信号！准备执行自动恢复...');\n" +
+                            "      setTimeout(()=>{\n" +
+                            "        console.log('[SOLO监控] 🔍 正在寻找富文本输入框...');\n" +
+                            "        const inputElement=document.querySelector('.chat-input-v2-input-box-editable[contenteditable=\"true\"]');\n" +
+                            "        if(inputElement){\n" +
+                            "          console.log('[SOLO监控] ✅ 找到输入框，正在模拟获取焦点和人类输入...');\n" +
+                            "          inputElement.focus();\n" +
+                            "          document.execCommand('insertText', false, '继续');\n" +
+                            "          console.log('[SOLO监控] ⌨️ 已成功通过底层指令输入“继续”');\n" +
+                            "          setTimeout(()=>{\n" +
+                            "            console.log('[SOLO监控] 🔍 正在寻找发送按钮...');\n" +
+                            "            const sendBtn=document.querySelector('.chat-input-v2-send-button');\n" +
+                            "            if(sendBtn){ \n" +
+                            "              console.log('[SOLO监控] ✅ 找到发送按钮，正在移除禁用状态并触发点击...');\n" +
+                            "              sendBtn.removeAttribute('disabled'); \n" +
+                            "              sendBtn.click(); \n" +
+                            "              console.log('[SOLO监控] 🎉 自动发送完毕，对话已成功恢复！');\n" +
+                            "            } else {\n" +
+                            "              console.error('[SOLO监控] ❌ 未找到发送按钮，流程异常终止！');\n" +
+                            "            }\n" +
+                            "          }, 300);\n" +
+                            "        } else {\n" +
+                            "          console.error('[SOLO监控] ❌ 未找到富文本输入框，流程异常终止！');\n" +
+                            "        }\n" +
+                            "      }, 1000);\n" +
+                            "    }\n" +
+                            "  };\n" +
+                            "  const observer=new MutationObserver(window._traeCheckAndAutoContinue);\n" +
+                            "  observer.observe(document.body,{childList:true,subtree:true,characterData:true});\n" +
+                            "  setInterval(window._traeCheckAndAutoContinue, 3000);\n" +
+                            "}\n" +
                              "if(!window._vConsoleInjected) {\n" +
                              "  window._vConsoleInjected=true;\n" +
                              "  const script=document.createElement('script');\n" +
