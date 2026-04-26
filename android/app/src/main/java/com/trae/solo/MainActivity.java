@@ -98,43 +98,29 @@ public class MainActivity extends BridgeActivity {
                              "}\n" +
                              "if(!window._traeAutoContinueInjected) {" +
                              "  window._traeAutoContinueInjected=true;" +
-                             "  let isProcessingError=false;" +
-                             "  const observer=new MutationObserver((mutations)=>{" +
-                             "    if(isProcessingError) return;" +
-                             "    for(const mutation of mutations){" +
-                             "      if(mutation.addedNodes.length>0){" +
-                             "        for(const node of mutation.addedNodes){" +
-                             "          if(node.nodeType===Node.ELEMENT_NODE){" +
-                             "            const text=node.textContent||'';" +
-                             "            if(text.includes('检测到模型循环，请求已被中断。')){" +
-                             "              isProcessingError=true;" +
-                             "              console.log('检测到模型循环中断错误，准备自动回复...');" +
-                             "              setTimeout(()=>{" +
-                             "                const inputElement=document.querySelector('textarea, input[type=\"text\"], [contenteditable=\"true\"]');" +
-                             "                if(inputElement){" +
-                             "                  const valueSetter=Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype,'value')?.set||Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value')?.set;" +
-                             "                  if(inputElement.isContentEditable){" +
-                             "                    inputElement.textContent='继续';" +
-                             "                  }else{" +
-                             "                    if(valueSetter){ valueSetter.call(inputElement,'继续'); }else{ inputElement.value='继续'; }" +
-                             "                  }" +
-                             "                  inputElement.dispatchEvent(new Event('input',{bubbles:true}));" +
-                             "                  inputElement.dispatchEvent(new Event('change',{bubbles:true}));" +
-                             "                  const enterEvent=new KeyboardEvent('keydown',{key:'Enter',code:'Enter',keyCode:13,which:13,bubbles:true});" +
-                             "                  inputElement.dispatchEvent(enterEvent);" +
-                             "                  const sendButton=document.querySelector('button[type=\"submit\"], .send-button, button[aria-label=\"Send\"], button[aria-label=\"发送\"]');" +
-                             "                  if(sendButton){ sendButton.click(); }" +
-                             "                }" +
-                             "                setTimeout(()=>{isProcessingError=false;},3000);" +
-                             "              },500);" +
-                             "              return;" +
-                             "            }" +
-                             "          }" +
+                             "  const observer=new MutationObserver(()=>{" +
+                             "    const agentMessages=document.querySelectorAll('.turn__agent-message, [class*=\"agent-message\"]');" +
+                             "    if(agentMessages.length===0) return;" +
+                             "    const lastMsg=agentMessages[agentMessages.length-1];" +
+                             "    if(lastMsg.dataset.autoContinued==='true') return;" +
+                             "    const text=lastMsg.textContent||'';" +
+                             "    if(text.includes('检测到模型循环，请求已被中断') || text.includes('abnormally stopped') || text.includes('进入循环') || text.includes('停止了当前对话')){" +
+                             "      lastMsg.dataset.autoContinued='true';" +
+                             "      console.log('[SOLO] Detected loop error in last message, auto-continuing...');" +
+                             "      setTimeout(()=>{" +
+                             "        const inputElement=document.querySelector('.chat-input-v2-input-box-editable[contenteditable=\"true\"]');" +
+                             "        if(inputElement){" +
+                             "          inputElement.focus();" +
+                             "          document.execCommand('insertText', false, '继续');" +
+                             "          setTimeout(()=>{" +
+                             "            const sendBtn=document.querySelector('.chat-input-v2-send-button');" +
+                             "            if(sendBtn){ sendBtn.removeAttribute('disabled'); sendBtn.click(); }" +
+                             "          }, 300);" +
                              "        }" +
-                             "      }" +
+                             "      }, 1000);" +
                              "    }" +
                              "  });" +
-                             "  observer.observe(document.body,{childList:true,subtree:true});" +
+                             "  observer.observe(document.body,{childList:true,subtree:true,characterData:true});" +
                              "}";
                     webView.evaluateJavascript(js, null);
                 }
