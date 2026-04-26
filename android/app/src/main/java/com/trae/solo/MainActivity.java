@@ -121,6 +121,16 @@ public class MainActivity extends BridgeActivity {
                              "    }" +
                              "  });" +
                              "  observer.observe(document.body,{childList:true,subtree:true,characterData:true});" +
+                             "}\n" +
+                             "if(!window._vConsoleInjected) {\n" +
+                             "  window._vConsoleInjected=true;\n" +
+                             "  const script=document.createElement('script');\n" +
+                             "  script.src='https://unpkg.com/vconsole@latest/dist/vconsole.min.js';\n" +
+                             "  script.onload=function(){\n" +
+                             "    new window.VConsole();\n" +
+                             "    console.log('[SOLO] vConsole initialized');\n" +
+                             "  };\n" +
+                             "  document.head.appendChild(script);\n" +
                              "}";
                     webView.evaluateJavascript(js, null);
                 }
