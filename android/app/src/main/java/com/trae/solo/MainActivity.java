@@ -121,30 +121,43 @@ public class MainActivity extends BridgeActivity {
                             "  console.log('[SOLO监控] 🚀 监控脚本已成功注入，正在后台静默监听DOM变化与定时巡检...');\n" +
                             "  window._traeCheckAndAutoContinue=()=>{\n" +
                             "    if(!window._traeAutoContinueEnabled) return;\n" +
-                            "    const agentMessages=document.querySelectorAll('.turn__agent-message, [class*=\"agent-message\"]');\n" +
-                            "    if(agentMessages.length===0) return;\n" +
-                            "    const lastMsg=agentMessages[agentMessages.length-1];\n" +
-                            "    if(lastMsg.dataset.autoContinued==='true') return;\n" +
-                            "    const text=lastMsg.textContent||'';\n" +
-                            "    if(text.includes('检测到模型循环，请求已被中断') || text.includes('abnormally stopped') || text.includes('进入循环') || text.includes('停止了当前对话')){\n" +
-                            "      lastMsg.dataset.autoContinued='true';" +
-                            "      console.log('[SOLO监控] ⚠️ 捕捉到模型循环中断信号！准备执行自动恢复...');\n" +
-                            "      setTimeout(()=>{\n" +
-                            "        console.log('[SOLO监控] 🔍 正在寻找富文本输入框...');\n" +
-                            "        const inputElement=document.querySelector('.chat-input-v2-input-box-editable[contenteditable=\"true\"]');\n" +
-                            "        if(inputElement){\n" +
-                            "          console.log('[SOLO监控] ✅ 找到输入框，正在模拟获取焦点和人类输入...');\n" +
-                            "          inputElement.focus();\n" +
-                            "          document.execCommand('insertText', false, '继续');\n" +
-                            "          console.log('[SOLO监控] ⌨️ 已成功通过底层指令输入“继续”');\n" +
-                            "          setTimeout(()=>{\n" +
-                            "            console.log('[SOLO监控] 🔍 正在寻找发送按钮...');\n" +
-                            "            const sendBtn=document.querySelector('.chat-input-v2-send-button');\n" +
-                            "            if(sendBtn){ \n" +
-                            "              console.log('[SOLO监控] ✅ 找到发送按钮，正在移除禁用状态并触发点击...');\n" +
-                            "              sendBtn.removeAttribute('disabled'); \n" +
-                            "              sendBtn.click(); \n" +
-                            "              console.log('[SOLO监控] 🎉 自动发送完毕，对话已成功恢复！');\n" +
+                            "    let targetNode = null;\n" +
+                            "    const statusBar = document.querySelector('.latest-assistant-bar');\n" +
+                            "    if(statusBar) {\n" +
+                            "      const sText = statusBar.textContent||'';\n" +
+                            "      if(sText.includes('检测到模型循环') || sText.includes('abnormally stopped') || sText.includes('进入循环') || sText.includes('停止了当前对话') || sText.includes('异常打断')) {\n" +
+                            "        targetNode = statusBar;\n" +
+                            "      }\n" +
+                            "    }\n" +
+                            "    if(!targetNode) {\n" +
+                            "      const agentMessages=document.querySelectorAll('.turn__agent-message, [class*=\"agent-message\"]');\n" +
+                            "      if(agentMessages.length > 0) {\n" +
+                            "        const lastMsg=agentMessages[agentMessages.length-1];\n" +
+                            "        const text=lastMsg.textContent||'';\n" +
+                            "        if(text.includes('检测到模型循环') || text.includes('abnormally stopped') || text.includes('进入循环') || text.includes('停止了当前对话') || text.includes('异常打断')){\n" +
+                            "          targetNode = lastMsg;\n" +
+                            "        }\n" +
+                            "      }\n" +
+                            "    }\n" +
+                            "    if(!targetNode || targetNode.dataset.autoContinued==='true') return;\n" +
+                            "    targetNode.dataset.autoContinued='true';" +
+                            "    console.log('[SOLO监控] ⚠️ 捕捉到模型异常打断信号！准备执行重发操作...');\n" +
+                            "    setTimeout(()=>{\n" +
+                            "      console.log('[SOLO监控] 🔍 正在寻找富文本输入框...');\n" +
+                            "      const inputElement=document.querySelector('.chat-input-v2-input-box-editable[contenteditable=\"true\"]');\n" +
+                            "      if(inputElement){\n" +
+                            "        console.log('[SOLO监控] ✅ 找到输入框，正在模拟获取焦点和人类输入...');\n" +
+                            "        inputElement.focus();\n" +
+                            "        document.execCommand('insertText', false, '重发');\n" +
+                            "        console.log('[SOLO监控] ⌨️ 已成功通过底层指令输入“重发”');\n" +
+                            "        setTimeout(()=>{\n" +
+                            "          console.log('[SOLO监控] 🔍 正在寻找发送按钮...');\n" +
+                            "          const sendBtn=document.querySelector('.chat-input-v2-send-button');\n" +
+                            "          if(sendBtn){ \n" +
+                            "            console.log('[SOLO监控] ✅ 找到发送按钮，正在移除禁用状态并触发点击...');\n" +
+                            "            sendBtn.removeAttribute('disabled'); \n" +
+                            "            sendBtn.click(); \n" +
+                            "            console.log('[SOLO监控] 🎉 重发操作执行完毕！');\n" +
                             "            } else {\n" +
                             "              console.error('[SOLO监控] ❌ 未找到发送按钮，流程异常终止！');\n" +
                             "            }\n" +
