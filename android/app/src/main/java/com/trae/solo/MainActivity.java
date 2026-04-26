@@ -122,11 +122,12 @@ public class MainActivity extends BridgeActivity {
                             "  window._traeCheckAndAutoContinue=()=>{\n" +
                             "    if(!window._traeAutoContinueEnabled) return;\n" +
                             "    let targetNode = null;\n" +
-                            "    const statusBar = document.querySelector('.latest-assistant-bar');\n" +
-                            "    if(statusBar) {\n" +
-                            "      const sText = statusBar.textContent||'';\n" +
+                            "    const statusBars = document.querySelectorAll('.latest-assistant-bar');\n" +
+                            "    if(statusBars.length > 0) {\n" +
+                            "      const lastStatusBar = statusBars[statusBars.length - 1];\n" +
+                            "      const sText = lastStatusBar.textContent||'';\n" +
                             "      if(sText.includes('检测到模型循环') || sText.includes('abnormally stopped') || sText.includes('进入循环') || sText.includes('停止了当前对话') || sText.includes('异常打断')) {\n" +
-                            "        targetNode = statusBar;\n" +
+                            "        targetNode = lastStatusBar;\n" +
                             "      }\n" +
                             "    }\n" +
                             "    if(!targetNode) {\n" +
@@ -141,15 +142,15 @@ public class MainActivity extends BridgeActivity {
                             "    }\n" +
                             "    if(!targetNode || targetNode.dataset.autoContinued==='true') return;\n" +
                             "    targetNode.dataset.autoContinued='true';" +
-                            "    console.log('[SOLO监控] ⚠️ 捕捉到模型异常打断信号！准备执行重发操作...');\n" +
+                            "    console.log('[SOLO监控] ⚠️ 捕捉到最新节点模型异常打断信号！准备执行继续操作...');\n" +
                             "    setTimeout(()=>{\n" +
                             "      console.log('[SOLO监控] 🔍 正在寻找富文本输入框...');\n" +
                             "      const inputElement=document.querySelector('.chat-input-v2-input-box-editable[contenteditable=\"true\"]');\n" +
                             "      if(inputElement){\n" +
                             "        console.log('[SOLO监控] ✅ 找到输入框，正在模拟获取焦点和人类输入...');\n" +
                             "        inputElement.focus();\n" +
-                            "        document.execCommand('insertText', false, '重发');\n" +
-                            "        console.log('[SOLO监控] ⌨️ 已成功通过底层指令输入“重发”');\n" +
+                            "        document.execCommand('insertText', false, '继续');\n" +
+                            "        console.log('[SOLO监控] ⌨️ 已成功通过底层指令输入“继续”');\n" +
                             "        setTimeout(()=>{\n" +
                             "          console.log('[SOLO监控] 🔍 正在寻找发送按钮...');\n" +
                             "          const sendBtn=document.querySelector('.chat-input-v2-send-button');\n" +
@@ -157,7 +158,7 @@ public class MainActivity extends BridgeActivity {
                             "            console.log('[SOLO监控] ✅ 找到发送按钮，正在移除禁用状态并触发点击...');\n" +
                             "            sendBtn.removeAttribute('disabled'); \n" +
                             "            sendBtn.click(); \n" +
-                            "            console.log('[SOLO监控] 🎉 重发操作执行完毕！');\n" +
+                            "            console.log('[SOLO监控] 🎉 继续操作执行完毕！');\n" +
                             "            } else {\n" +
                             "              console.error('[SOLO监控] ❌ 未找到发送按钮，流程异常终止！');\n" +
                             "            }\n" +
