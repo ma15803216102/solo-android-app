@@ -166,7 +166,6 @@ public class MainActivity extends BridgeActivity {
                             "          console.error('[SOLO监控] ❌ 未找到富文本输入框，流程异常终止！');\n" +
                             "        }\n" +
                             "      }, 1000);\n" +
-                            "    }\n" +
                             "  };\n" +
                             "  const observer=new MutationObserver(window._traeCheckAndAutoContinue);\n" +
                             "  observer.observe(document.body,{childList:true,subtree:true,characterData:true});\n" +
