@@ -1,0 +1,53 @@
+{
+  "project": "AI 自动恢复对话功能",
+  "branchName": "prd/ai-auto-continue",
+  "description": "在当前 Android/Capacitor App 中，AI 模型可能会因为循环判断被中断，并返回“检测到模型循环，请求已被中断。”的错误提示。为了提升用户体验，本项目旨在通过底层原生 JavaScript 注入 WebView，实时监控页面元素。当检测到该中断提示时，系统自动在输入框中填入“继续”并发送，实现对话的无缝恢复。",
+  "techStack": {
+    "appType": "Android/Capacitor App",
+    "frontend": "原生 Vanilla ES6+ 语法",
+    "backend": "",
+    "database": "",
+    "buildTool": "",
+    "stateManagement": "",
+    "other": "Capacitor 5, Android WebView"
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "注入监控脚本检测报错",
+      "description": "As a App 用户, I want 系统能在底层监控 AI 的回复内容 so that 在发生特定报错时能够及时做出响应",
+      "acceptanceCriteria": [
+        "编写原生 JS 脚本，使用 `MutationObserver` 监听 WebView 中的 DOM 变化（如聊天记录容器）。",
+        "当新增的 DOM 节点文本中包含“检测到模型循环，请求已被中断。”时，触发拦截逻辑。",
+        "脚本具备防抖或状态锁（如 3 秒内仅触发一次），防止因 DOM 重绘导致同一条错误被重复检测。",
+        "在浏览器中验证页面功能和样式（在浏览器或真机 WebView 环境中验证监控逻辑生效）。",
+        "代码通过编译/类型检查/lint检查无错误"
+      ],
+      "priority": 1,
+      "dependencies": [],
+      "type": "frontend",
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "自动输入并触发发送",
+      "description": "As a App 用户, I want 在检测到模型中断报错时，系统能自动在输入框输入“继续”并发送 so that 无需手动点击即可恢复对话",
+      "acceptanceCriteria": [
+        "脚本能够准确定位到聊天输入框（如 `textarea`、`input` 或 `[contenteditable]` 元素）。",
+        "自动将输入框的值设置为“继续”，并触发对应的 `input` 和 `change` 事件以适配可能存在的前端框架双向绑定。",
+        "准确定位到发送按钮并触发 `click` 事件；或者向输入框派发 `Enter` 键的 `KeyboardEvent`，以完成发送动作。",
+        "发送后自动释放状态锁，准备下一次可能的监控。",
+        "在浏览器中验证页面功能和样式（验证自动输入和发送过程且不会产生死循环）。",
+        "代码通过编译/类型检查/lint检查无错误"
+      ],
+      "priority": 2,
+      "dependencies": [
+        "US-001"
+      ],
+      "type": "frontend",
+      "passes": true,
+      "notes": ""
+    }
+  ]
+}

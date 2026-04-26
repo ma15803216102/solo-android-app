@@ -1,0 +1,111 @@
+23 17:14:27.012 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 62 - Msg: [MobileMiniInput] shouldUseMiniInput changed [object
+ Object]
+04-23 17:14:27.015 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 57 - Msg: [MobileMiniInput] scroll release expanded lock [obje
+ct Object]
+04-23 17:14:27.016 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 57 - Msg: [MobileMiniInput] scroll release expanded lock [obje
+ct Object]
+04-23 17:14:27.027 22325 22325 E Capacitor: JavaScript Error: {"type":"js.error","error":{"message":"ResizeObserver loo
+p completed with undelivered notifications.","url":"https://solo.trae.ai/session/69e9d9fc1ca729c607b3437b","line":0,"co
+l":0,"errorObject":"null"}}
+04-23 17:14:27.028 22325 22325 E Capacitor/Console: File: https://solo.trae.ai/session/69e9d9fc1ca729c607b3437b - Line
+0 - Msg: ResizeObserver loop completed with undelivered notifications.
+04-23 17:14:27.031 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 57 - Msg: [MobileMiniInput] scroll release expanded lock [obje
+ct Object]
+04-23 17:14:29.506  3011  3277 D VRR [OPlusGameStatusManager]: updateGameAccelerationStatus pkgName: com.trae.solo mOSy
+ncFeatureSwitch: false mIsGamePolicy: false mHeartStop: true mHasFlickerRisk: false mForceAcceleration: false mToastRea
+dy: false enable: false
+04-23 17:14:31.872 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 6 - Msg: [SSE] fetch response | status=200
+04-23 17:14:38.514 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/8467.0f3960bc.js - Line 87 - Msg: calculate step durations {"svr_11_cloud_agent_postpr
+ocessing":0,"svr_06_platform_first_token_timing":6363,"svr__06_platform_inner_first_token_timing":6263,"rs_05_create_sn
+apshot":1776935678268,"rs_06_resolver_websearch":1776935671451,"rs_13_render_user_prompt":1776935671465,"svr__02_prepro
+cess_other":83,"svr__04_postprocess_security_check":0,"svr_01_queue_timing":6,"svr_02_preprocess_timing":271,"rs_09_pro
+cess_task":1776935671461,"rs_start_chat_01_begin":1776935671318,"rs_15_before_generate_plan":1776935671467,"svr__06_pla
+tform_preprocess":58,"rs_18_llm_response_first_token":1776935678267,"rs_04_create_message":1776935671375,"svr_09_middle
+ware_processing_timing":124,"svr__06_platform_provider_network_latency":11,"rs_16_llm_generate_plain_item":177693567148
+5,"rs_07_create_task":1776935671454,"svr_04_postprocess_timing":0,"rs_03_get_history_message":1776935671373,"rs_06_get_
+custom_model":1776935671449,"rs_06_resolve_contexts":1776935671452,"rs_06_resolver_user_message":1776935671450,"svr_11_
+cloud_agent_preprocessing":111,"svr__06_platform_network_latency":31,"remote_03_start_chat":1776935666254,"svr__02_prep
+rocess_check_risk":25,"remote_00_request_start":1776935666219,"svr_02_gateway_preprocess_timing":133,"svr__04_postproce
+ss_other":0,"svr_10_first_sse_event_timing":1986,"rs_08_create_turn":1776935671459,"svr_11_cloud_agent_middleware":20,"
+svr__06_platform_provider_first_token_timing":0,"svr_11_gateway_server_processing_time":6627,"svr_11_server_processing_
+time":6759,"svr__06_platform_other":11,"svr__02_preprocess_build_llm_prompt":0,"rs_02_get_session":1776935671321,"fe_00
+_send":1776935665962,"fe_01_send_response":1776935666408,"fe_02_receive":1776935678511}
+04-23 17:14:38.517 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/8467.0f3960bc.js - Line 87 - Msg: calculate step durations total: 12549, rs: 191, remo
+te: 35, fe: 446, network: 23, svr: 396, llm: 6363, client: 5767, hop: 5564, {"svr_11_cloud_agent_postprocessing":0,"svr
+_06_platform_first_token_timing":6363,"svr__06_platform_inner_first_token_timing":6263,"svr__02_preprocess_other":83,"s
+vr__04_postprocess_security_check":0,"svr_01_queue_timing":6,"svr_02_preprocess_timing":271,"svr__06_platform_preproces
+s":58,"svr_09_middleware_processing_timing":124,"svr__06_platform_provider_network_latency":11,"svr_04_postprocess_timi
+ng":0,"svr_11_cloud_agent_preprocessing":111,"svr__06_platform_network_latency":31,"svr__02_preprocess_check_risk":25,"
+svr_02_gateway_preprocess_timing":133,"svr__04_postprocess_other":0,"svr_10_first_sse_event_timing":1986,"svr_11_cloud_
+agent_middleware":20,"svr__06_platform_provider_first_token_timing":0,"svr_11_gateway_server_processing_time":6627,"svr
+_11_server_processing_time":6759,"svr__06_platform_other":11,"svr__02_preprocess_build_llm_prompt":0,"rs_02_get_session
+":3,"rs_03_get_history_message":52,"rs_04_create_message":2,"rs_06_get_custom_model":74,"rs_06_resolve_contexts":3,"rs_
+07_create_task":2,"rs_08_create_turn":5,"rs_09_process_task":2,"rs_13_render_user_prompt":4,"rs_15_before_generate_plan
+":2,"rs_16_llm_generate_plain_item":18,"rs_18_llm_response_first_token":6782,"rs_05_create_snapshot":1,"remote_03_start
+_chat":35,"fe_01_send_response":446,"net_01_process":23,"rs_06_resolver_websearch":2,"hop":5564,"client_cost":5767,"svr
+_cost":396}
+04-23 17:14:41.960 30839 30906 D ClashForAndroid: [DNS] mcs-normal.trae.ai --> 2.16.238.25
+04-23 17:14:42.239 30839 30901 I ClashForAndroid: [TCP] 127.0.0.1:37484 --> mcs-normal.trae.ai:443 match Match() using
+鎬т环姣旀満鍦篬鈿★笍馃嚟馃嚢 棣欐腐涓撶嚎1涓?x]
+04-23 17:15:06.423 30839 30907 D ClashForAndroid: [DNS] agent-sandbox-my-b1-gw.trae.ai --> 43.216.112.190
+04-23 17:15:06.853 30839 32495 I ClashForAndroid: [TCP] 127.0.0.1:42314 --> agent-sandbox-my-b1-gw.trae.ai:443 match Ma
+tch() using 鎬т环姣旀満鍦篬鈿★笍馃嚟馃嚢 棣欐腐涓撶嚎1涓?x]
+04-23 17:15:08.780 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 6 - Msg: [SSE] terminal event detected: done
+04-23 17:15:08.783 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 6 - Msg: [SSE] cancel
+04-23 17:15:08.783 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 6 - Msg: [SSE] [cancel] reconnecting=false cancelled=true term
+inated=false attempts=0/3 total=0/10 lastEventId=69e9e2f73e6ea99c31342eb3:196 events=197
+04-23 17:15:08.838 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 6 - Msg: [SSE] read aborted
+04-23 17:15:08.847 22325 22325 E Capacitor/Console: File: https://solo.trae.ai/session/69e9d9fc1ca729c607b3437b - Line
+0 - Msg: ResizeObserver loop completed with undelivered notifications.
+04-23 17:15:08.848 22325 22325 E Capacitor: JavaScript Error: {"type":"js.error","error":{"message":"ResizeObserver loo
+p completed with undelivered notifications.","url":"https://solo.trae.ai/session/69e9d9fc1ca729c607b3437b","line":0,"co
+l":0,"errorObject":"null"}}
+04-23 17:15:08.885 22325 22325 I Capacitor/Console: File: https://lf-cdn.marscode.com/obj/marscode-bucket-sg/goofy_depl
+oy_edenx/ide/trae-mono/static/js/main.a370ca7d.js - Line 57 - Msg: [MobileMiniInput] scroll release expanded lock [obje
+ct Object]
+04-23 17:15:17.218 23799 23799 D AONLog  : IntelligentPerceptionUtils: isLauncherTop componentName:ComponentInfo{com.tr
+ae.solo/com.trae.solo.MainActivity}
+04-23 17:15:17.292 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.293 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.293 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.297 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.297 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.299 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.301 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.301 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.302 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.303 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.304 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.304 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.305 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.306 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:17.306 22325 22561 I OplusCameraManagerGlobal: setClientInfo, packageName: com.trae.solo, uid: 10432, pid:
+22325
+04-23 17:15:20.853  3011  3277 D VRR [OPlusGameStatusManager]: updateGameAccelerationStatus pkgName: com.trae.solo mOSy
+ncFeatureSwitch: false mIsGamePolicy: false mHeartStop: true mHasFlickerRisk: false mForceAcceleration: false mToastRea
+dy: false enable: false

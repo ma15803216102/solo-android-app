@@ -79,22 +79,62 @@ public class MainActivity extends BridgeActivity {
                              "document.getElementById('t-back').onclick=()=>{window.history.back();c.classList.remove('exp');resT();};" +
                              "document.getElementById('t-ref').onclick=()=>{window.location.reload();c.classList.remove('exp');resT();};" +
                              "document.addEventListener('click',e=>{if(!c.contains(e.target)){c.classList.remove('exp');resT();}});" +
-                              "window.addEventListener('resize',()=>{let t=parseFloat(c.style.top);if(isNaN(t))t=c.getBoundingClientRect().top;c.style.top=Math.max(0,Math.min(t,window.innerHeight-56))+'px';snap();});" +
-                              "c.style.right='auto';c.style.bottom='auto';" +
-                              "const st=load();" +
-                              "if(st&&typeof st.top==='number'){" +
-                              "  c.style.top=Math.max(0,Math.min(st.top,window.innerHeight-56))+'px';" +
-                              "  c.style.left=(st.side==='L')?'0px':(window.innerWidth-56)+'px';" +
-                              "  c.classList.remove('snap-left','snap-right');" +
-                              "  c.classList.add((st.side==='L')?'snap-left':'snap-right');" +
-                              "  resT();" +
-                              "}else{" +
-                              "  c.style.top=Math.max(0,Math.min(window.innerHeight-56-80,window.innerHeight-56))+'px';" +
-                              "  c.style.left=(window.innerWidth-56)+'px';" +
-                              "  c.classList.remove('snap-left','snap-right');" +
-                              "  c.classList.add('snap-right');" +
-                              "  resT();" +
-                              "}" +
+                             "window.addEventListener('resize',()=>{let t=parseFloat(c.style.top);if(isNaN(t))t=c.getBoundingClientRect().top;c.style.top=Math.max(0,Math.min(t,window.innerHeight-56))+'px';snap();});" +
+                             "c.style.right='auto';c.style.bottom='auto';" +
+                             "const st=load();" +
+                             "if(st&&typeof st.top==='number'){" +
+                             "  c.style.top=Math.max(0,Math.min(st.top,window.innerHeight-56))+'px';" +
+                             "  c.style.left=(st.side==='L')?'0px':(window.innerWidth-56)+'px';" +
+                             "  c.classList.remove('snap-left','snap-right');" +
+                             "  c.classList.add((st.side==='L')?'snap-left':'snap-right');" +
+                             "  resT();" +
+                             "}else{" +
+                             "  c.style.top=Math.max(0,Math.min(window.innerHeight-56-80,window.innerHeight-56))+'px';" +
+                             "  c.style.left=(window.innerWidth-56)+'px';" +
+                             "  c.classList.remove('snap-left','snap-right');" +
+                             "  c.classList.add('snap-right');" +
+                             "  resT();" +
+                             "}" +
+                             "}\n" +
+                             "if(!window._traeAutoContinueInjected) {" +
+                             "  window._traeAutoContinueInjected=true;" +
+                             "  let isProcessingError=false;" +
+                             "  const observer=new MutationObserver((mutations)=>{" +
+                             "    if(isProcessingError) return;" +
+                             "    for(const mutation of mutations){" +
+                             "      if(mutation.addedNodes.length>0){" +
+                             "        for(const node of mutation.addedNodes){" +
+                             "          if(node.nodeType===Node.ELEMENT_NODE){" +
+                             "            const text=node.textContent||'';" +
+                             "            if(text.includes('检测到模型循环，请求已被中断。')){" +
+                             "              isProcessingError=true;" +
+                             "              console.log('检测到模型循环中断错误，准备自动回复...');" +
+                             "              setTimeout(()=>{" +
+                             "                const inputElement=document.querySelector('textarea, input[type=\"text\"], [contenteditable=\"true\"]');" +
+                             "                if(inputElement){" +
+                             "                  const valueSetter=Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype,'value')?.set||Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value')?.set;" +
+                             "                  if(inputElement.isContentEditable){" +
+                             "                    inputElement.textContent='继续';" +
+                             "                  }else{" +
+                             "                    if(valueSetter){ valueSetter.call(inputElement,'继续'); }else{ inputElement.value='继续'; }" +
+                             "                  }" +
+                             "                  inputElement.dispatchEvent(new Event('input',{bubbles:true}));" +
+                             "                  inputElement.dispatchEvent(new Event('change',{bubbles:true}));" +
+                             "                  const enterEvent=new KeyboardEvent('keydown',{key:'Enter',code:'Enter',keyCode:13,which:13,bubbles:true});" +
+                             "                  inputElement.dispatchEvent(enterEvent);" +
+                             "                  const sendButton=document.querySelector('button[type=\"submit\"], .send-button, button[aria-label=\"Send\"], button[aria-label=\"发送\"]');" +
+                             "                  if(sendButton){ sendButton.click(); }" +
+                             "                }" +
+                             "                setTimeout(()=>{isProcessingError=false;},3000);" +
+                             "              },500);" +
+                             "              return;" +
+                             "            }" +
+                             "          }" +
+                             "        }" +
+                             "      }" +
+                             "    }" +
+                             "  });" +
+                             "  observer.observe(document.body,{childList:true,subtree:true});" +
                              "}";
                     webView.evaluateJavascript(js, null);
                 }

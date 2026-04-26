@@ -1,0 +1,10 @@
+[2026-04-26] Execution Log
+- US-001: 注入监控脚本检测报错 (Completed)
+  - Added MutationObserver in MainActivity.java to monitor WebView DOM changes.
+  - Implemented text detection for "检测到模型循环，请求已被中断。"
+  - Implemented 3-second debounce state lock to avoid duplicate triggering.
+- US-002: 自动输入并触发发送 (Completed)
+  - Extended the injected script in MainActivity.java to locate textarea/input/[contenteditable] elements.
+  - Handled value setting and dispatched 'input'/'change' events.
+  - Dispatched 'Enter' KeyboardEvent and simulated a click on the send button.
+  - Added reset of the state lock after processing.
