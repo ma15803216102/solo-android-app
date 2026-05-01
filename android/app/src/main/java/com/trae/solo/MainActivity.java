@@ -1,10 +1,14 @@
 package com.trae.solo;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.content.pm.PackageManager;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.graphics.Insets;
@@ -13,6 +17,13 @@ import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
     private Handler handler = new Handler(Looper.getMainLooper());
+    private static final int AUDIO_PERMISSION_REQUEST_CODE = 41001;
+
+    private void ensureAudioPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, AUDIO_PERMISSION_REQUEST_CODE);
+        }
+    }
 
     private Runnable jsInjector = new Runnable() {
         @Override
@@ -199,6 +210,8 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onStart() {
         super.onStart();
+
+        ensureAudioPermission();
         
         View webView = this.bridge.getWebView();
         if (webView != null) {
@@ -218,6 +231,11 @@ public class MainActivity extends BridgeActivity {
         
         // Start injecting JS observer periodically (survives page reloads)
         handler.postDelayed(jsInjector, 2000);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
