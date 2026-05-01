@@ -17,6 +17,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Mark Workspace Safe
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -52,7 +55,7 @@ jobs:
         run: |
           # Make sure app name explicitly says "Global" before build
           sed -i 's/>TRAE SOLO</>TRAE SOLO 国际版</g' app/src/main/res/values/strings.xml
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon --stacktrace
           cp app/build/outputs/apk/debug/app-debug.apk ../TRAE-SOLO-Global-v1.0.${{ github.run_number }}.apk
 
       - name: Prepare CN App (solo.trae.cn)
@@ -75,7 +78,7 @@ jobs:
       - name: Build CN APK
         working-directory: ./android
         run: |
-          ./gradlew clean assembleDebug
+          ./gradlew clean assembleDebug --no-daemon --stacktrace
           cp app/build/outputs/apk/debug/app-debug.apk ../TRAE-SOLO-CN-v1.0.${{ github.run_number }}.apk
 
       - name: Create Release
