@@ -72,8 +72,9 @@ public class MainActivity extends BridgeActivity {
                              "  resT();" +
                              "  save();" +
                              "};" +
+                             "let lastTouchTs=0;" +
                              "const toggleExp=()=>{c.classList.toggle('exp');if(c.classList.contains('exp')) clearTimeout(ht); else resT();};" +
-                             "m.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();toggleExp();});" +
+                             "m.addEventListener('click',e=>{if(Date.now()-lastTouchTs<700) return; e.preventDefault();e.stopPropagation();toggleExp();});" +
                              "m.addEventListener('touchstart',e=>{" +
                              "  c.classList.remove('half');" +
                              "  let t=e.touches[0];sx=t.clientX;sy=t.clientY;" +
@@ -96,6 +97,7 @@ public class MainActivity extends BridgeActivity {
                              "  }" +
                              "},{passive:false});" +
                              "m.addEventListener('touchend',e=>{" +
+                             "  lastTouchTs=Date.now();e.preventDefault();" +
                              "  c.classList.remove('dragging');" +
                              "  if(!moved){" +
                              "    toggleExp();" +
