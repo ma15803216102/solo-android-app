@@ -72,6 +72,8 @@ public class MainActivity extends BridgeActivity {
                              "  resT();" +
                              "  save();" +
                              "};" +
+                             "const toggleExp=()=>{c.classList.toggle('exp');if(c.classList.contains('exp')) clearTimeout(ht); else resT();};" +
+                             "m.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();toggleExp();});" +
                              "m.addEventListener('touchstart',e=>{" +
                              "  c.classList.remove('half');" +
                              "  let t=e.touches[0];sx=t.clientX;sy=t.clientY;" +
@@ -96,9 +98,7 @@ public class MainActivity extends BridgeActivity {
                              "m.addEventListener('touchend',e=>{" +
                              "  c.classList.remove('dragging');" +
                              "  if(!moved){" +
-                             "    c.classList.toggle('exp');" +
-                             "    if(c.classList.contains('exp')) clearTimeout(ht);" +
-                             "    else resT();" +
+                             "    toggleExp();" +
                              "  }else{ snap(); c.classList.remove('exp'); }" +
                              "});" +
                              "document.getElementById('t-back').onclick=()=>{window.history.back();c.classList.remove('exp');resT();};\n" +
