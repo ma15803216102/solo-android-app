@@ -18,7 +18,14 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
     private Handler handler = new Handler(Looper.getMainLooper());
     private static final int AUDIO_PERMISSION_REQUEST_CODE = 41001;
-    private final String appVersionName = BuildConfig.VERSION_NAME;
+
+    private String getAppVersionName() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
+    }
 
     private void ensureAudioPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -32,7 +39,7 @@ public class MainActivity extends BridgeActivity {
             if (bridge != null) {
                 WebView webView = bridge.getWebView();
                 if (webView != null) {
-                    String js = "window.__SOLO_APP_VERSION__=" + "'" + appVersionName + "'" + ";" +
+                    String js = "window.__SOLO_APP_VERSION__=" + "'" + getAppVersionName() + "'" + ";" +
                              "if(!window._traeFabInjected){" +
                              "window._traeFabInjected=true;" +
                              "const c=document.createElement('div');" +

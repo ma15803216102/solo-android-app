@@ -1,0 +1,60 @@
+# 忽略的文件和目录
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
+
+# 编辑器配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 构建产物
+dist/
+build/
+output/
+
+# 依赖目录
+node_modules/
+venv/
+
+# 配置文件
+.env
+.env.local
+.env.*.local
+
+# 数据库文件
+*.db
+*.sqlite
+
+# 备份文件
+*.bak
+*.backup
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
+
+# 测试覆盖率
+coverage/
+.nyc_output/
+
+# 持续集成
+.github/workflows/*.yml
+.travis.yml
+.gitlab-ci.yml
+
+# 文档构建
+_site/
+.docs/
